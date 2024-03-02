@@ -2,9 +2,14 @@ const taskModel = require('../models/tasks.model')
 
 module.exports.index = async (req, res) => {
     {
-        const data = await taskModel.find({
+        const find = {
             deleted: false
-        })
+        }
+        const status = req.query.status
+        if (status) {
+            find.status = status
+        }
+        const data = await taskModel.find(find)
 
         res.json(data)
     }
