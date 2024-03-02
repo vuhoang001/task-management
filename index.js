@@ -16,30 +16,10 @@ database.connect()
 // Kết thúc kết nối database
 
 
-const taskModel = require('./models/tasks.model')
+// Router version 1
+const routerVersion1 = require('./api/v1/routes/index.route')
 
-app.get('/tasks', async (req, res) => {
-    const data = await taskModel.find({
-        deleted: false
-    })
-
-    res.json(data)
-})
-
-
-app.get('/tasks/detail/:id', async (req, res) => {
-    try {
-        const id = req.params.id
-        const data = await taskModel.findOne({
-            _id: id,
-            deleted: false
-        })
-
-        res.json(data)
-    } catch (e) {
-        res.json('ERROR !')
-    }
-})
+routerVersion1(app)
 
 app.listen(port, () => {
     console.log(`App is listening on port ${port}`)
