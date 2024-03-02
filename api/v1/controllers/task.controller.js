@@ -2,6 +2,7 @@ const taskModel = require('../models/tasks.model')
 
 const paginationHelper = require('../../../helpers/panigationHelpers.helper')
 const searchHelper = require('../../../helpers/searchHelper.helper')
+// [GET] /api/v1/tasks 
 module.exports.index = async (req, res) => {
     {
         const find = {
@@ -48,7 +49,7 @@ module.exports.index = async (req, res) => {
     }
 }
 
-
+// [GET] /api/v1/tasks/detail/:id 
 module.exports.detail = async (req, res) => {
     try {
         const id = req.params.id
@@ -60,5 +61,28 @@ module.exports.detail = async (req, res) => {
         res.json(data)
     } catch (e) {
         res.json('ERROR !')
+    }
+}
+
+// [GET] /api/v1/tasks/change-status/:id 
+module.exports.changeStatus = async (req, res) => {
+    try {
+        const id = req.params.id
+        const status = req.body.status;
+        await taskModel.updateOne({
+            _id: id,
+        }, {
+            status: status
+        })
+
+        res.json({
+            code: 200,
+            message: "Cập nhật trạng thái thành công !"
+        })
+    } catch (e) {
+        res.json({
+            code: 400,
+            message: "Cập nhật trạng thái thất bại !"
+        })
     }
 }

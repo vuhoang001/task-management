@@ -1,21 +1,13 @@
 const express = require('express')
-
-
-// Nhúng dotenv
-require('dotenv').config()
-// Kết thúc nhúng dotenv
-
-
 const app = express()
+const bodyParse = require('body-parser')
+require('dotenv').config()
 const port = process.env.PORT
-
-
-// Kết nối database
 const database = require('./config/database')
 database.connect()
-// Kết thúc kết nối database
 
-
+// parse application/json 
+app.use(bodyParse.json())
 // Router version 1
 const routerVersion1 = require('./api/v1/routes/index.route')
 
