@@ -1,7 +1,7 @@
 const taskModel = require('../models/tasks.model')
 
 const paginationHelper = require('../../../helpers/panigationHelpers.helper')
-
+const searchHelper = require('../../../helpers/searchHelper.helper')
 module.exports.index = async (req, res) => {
     {
         const find = {
@@ -31,7 +31,18 @@ module.exports.index = async (req, res) => {
             countTasks
         )
         // End pagination 
-        const data = await taskModel.find(find).sort(sort).limit(objectPagination.limitItems).skip(objectPagination.skip)
+
+        // Search 
+        let objectSearch = searchHelper(req.query)
+        if (req.query.keyword) {
+            find.title = objectSearch.regex
+        }
+        // End search 
+
+        const data = await taskModel.find(find)
+            .sort(sort)
+            .limit(objectPagination.limitItems)
+            .skip(objectPagination.skip)
 
         res.json(data)
     }
