@@ -8,5 +8,7 @@ router.get('/detail/:id', controller.detail)
 
 router.patch('/change-status/:id', controller.changeStatus)
 
+router.patch('/change-multi', controller.changeMulti)
+
 
 module.exports = router

@@ -64,7 +64,7 @@ module.exports.detail = async (req, res) => {
     }
 }
 
-// [GET] /api/v1/tasks/change-status/:id 
+// [PATCH] /api/v1/tasks/change-status/:id 
 module.exports.changeStatus = async (req, res) => {
     try {
         const id = req.params.id
@@ -84,5 +84,35 @@ module.exports.changeStatus = async (req, res) => {
             code: 400,
             message: "Cập nhật trạng thái thất bại !"
         })
+    }
+}
+
+// [PATCH] /api/v1/tasks/change-multi 
+module.exports.changeMulti = async (req, res) => {
+    const ids = req.body.ids
+    const key = req.body.key
+    const value = req.body.value
+    switch (key) {
+        case "status": {
+            await taskModel.updateMany({
+                _id: { $in: ids }
+            }, {
+                status: value
+            })
+
+            res.json({
+                code: 200,
+                message: "Cập nhật trạng thái thành công !"
+            })
+            break
+        }
+        default: {
+            res.json({
+                code: 400,
+                message: "Cập nhật trạng thái thất bại !"
+            })
+            break;
+        }
+
     }
 }
