@@ -4,8 +4,11 @@ const bodyParse = require('body-parser')
 require('dotenv').config()
 const port = process.env.PORT
 const database = require('./config/database')
+const cors = require('cors')
 database.connect()
 
+
+app.use(cors)
 // parse application/json 
 app.use(bodyParse.json())
 // Router version 1
