@@ -106,10 +106,24 @@ module.exports.changeMulti = async (req, res) => {
             })
             break
         }
+        case "delete": {
+            await taskModel.updateMany({
+                _id: { $in: ids }
+            }, {
+                deleted: true,
+                deletedAt: new Date()
+            })
+
+            res.json({
+                code: 200,
+                message: "Xóa nhiều records thành công !"
+            })
+            break
+        }
         default: {
             res.json({
                 code: 400,
-                message: "Cập nhật trạng thái thất bại !"
+                message: "Hoạt động thất bại !"
             })
             break;
         }
