@@ -163,3 +163,15 @@ module.exports.detail = async (req, res) => {
         info: req.user
     })
 }
+
+
+// [GET]{{BASE_URL}}/api/v1/user/list-users
+module.exports.listUsers = async (req, res) => {
+    const users = await userModel.find({
+        deleted: false
+    }).select('fullName email')
+    res.json({
+        code: 200,
+        infor: users
+    })
+}

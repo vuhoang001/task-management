@@ -135,6 +135,7 @@ module.exports.changeMulti = async (req, res) => {
 module.exports.create = async (req, res) => {
     try {
         req.body.createdBy = req.user.id
+        req.body.listUsers = req.body.listUsers
         const task = new taskModel(req.body)
         const data = await task.save()
         res.json({

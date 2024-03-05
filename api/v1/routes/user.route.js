@@ -9,4 +9,5 @@ router.post('/forget-password', controller.forgetPassword)
 router.post('/otp', controller.otp)
 router.post('/reset-password', controller.reset)
 router.get('/detail', auth.requestAuth, controller.detail)
+router.get('/list-users', auth.requestAuth, controller.listUsers)
 module.exports = router 
