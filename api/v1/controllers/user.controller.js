@@ -37,3 +37,35 @@ module.exports.register = async (req, res) => {
         })
     }
 }
+
+// [POST] {{BASE_URL}}/api/v1/user/login 
+module.exports.login = async (req, res) => {
+    const email = req.body.email
+    const password = req.body.password
+
+    const existedEmail = await userModel.findOne({
+        email: email,
+        deleted: false
+    })
+    if (!existedEmail) {
+        res.json({
+            code: 400,
+            message: "Email không tồn tại !"
+        })
+        return
+    }
+    if (md5(password) != existedEmail.password) {
+        res.json({
+            code: 400,
+            message: "Sai mật khẩu !"
+        })
+        return;
+    }
+    const token = existedEmail.tokenUser
+    res.cookie("token", token)
+    res.json({
+        code: 200,
+        token: token,
+        message: "Đăng nhập thành công !"
+    })
+}
