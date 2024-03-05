@@ -136,3 +136,20 @@ module.exports.otp = async (req, res) => {
         message: "Lấy mã xác nhận thành công !"
     })
 }
+
+// [POST] {{BASE_URL}}/api/v1/user/reset-password
+module.exports.reset = async (req, res) => {
+    const token = req.body.token
+    const password = req.body.token
+
+    await userModel.updateOne({
+        tokenUser: token
+    }, {
+        password: md5(password)
+    })
+
+    res.json({
+        code: 200,
+        message: "Đổi mật khẩu thành công !"
+    })
+}
