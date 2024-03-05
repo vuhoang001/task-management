@@ -157,13 +157,9 @@ module.exports.reset = async (req, res) => {
 
 // [GET] {{BASE_URL}}/api/v1/user/detail 
 module.exports.detail = async (req, res) => {
-    const token = req.cookies.token
-    const data = await userModel.findOne({
-        tokenUser: token
-    }).select('-password -tokenUser')
 
     res.json({
         code: 200,
-        data: data
+        info: req.user
     })
 }
